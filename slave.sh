@@ -16,7 +16,13 @@ exec 2>&1
 ###--------------------
 K8S_CNI_VERSION=0.7.5-00
 DOCKER_ENGINE_VERSION=1.11.2-0~xenial
+sudo apt-get -y install   apt-transport-https  ca-certificates  curl  gnupg-agent  software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
+sudo add-apt-repository   "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 ###--------------------
 
 
@@ -40,7 +46,8 @@ python-pip automake autoconf libtool indent vim tmux jq
 ##sudo apt-get -y install  docker-engine kubelet kubeadm kubectl kubernetes-cni golang-go jq
 version=$(echo $(echo $K8SVERSION |sed 's/v//')-00)
 sudo apt-get install -qy kubelet=$version kubectl=$version kubeadm=$version
-sudo apt-get -y install  docker-engine=$DOCKER_ENGINE_VERSION kubernetes-cni=$K8S_CNI_VERSION golang-go jq 
+#sudo apt-get -y install  docker-engine=$DOCKER_ENGINE_VERSION kubernetes-cni=$K8S_CNI_VERSION golang-go jq 
+sudo apt-get -y install kubernetes-cni=$K8S_CNI_VErSION golang-go jq
 
 sudo docker version
 sudo swapoff -a

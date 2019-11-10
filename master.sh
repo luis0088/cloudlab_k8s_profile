@@ -20,6 +20,15 @@ GIT_REPO=https://github.com/luis0088/cloudlab_k8s_profile.git
 K8S_CNI_VERSION=0.7.5-00
 DOCKER_ENGINE_VERSION=1.11.2-0~xenial
 
+sudo apt-get -y install   apt-transport-https  ca-certificates  curl  gnupg-agent  software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+sudo add-apt-repository   "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+
+
 ###--------------------
 sudo chown ${username}:${usergid} ${WORKINGDIR}/ -R
 cd $WORKINGDIR
@@ -48,7 +57,8 @@ python-pip automake autoconf libtool indent vim tmux ctags
 ##sudo apt-get -y install  docker-engine kubelet kubeadm kubectl kubernetes-cni golang-go jq 
 version=$(echo $(echo $K8SVERSION |sed 's/v//')-00)
 sudo apt-get install -qy kubelet=$version kubectl=$version kubeadm=$version
-sudo apt-get -y install docker-engine=$DOCKER_ENGINE_VERSION kubernetes-cni=$K8S_CNI_VERSION golang-go jq 
+#sudo apt-get -y install docker-engine=$DOCKER_ENGINE_VERSION kubernetes-cni=$K8S_CNI_VERSION golang-go jq 
+sudo apt-get -y install kubernetes-cni=$K8S_CNI_VERSION golang-go jq
 # Install version-specific Kubelet - Read https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl
 ##curl -LO https://storage.googleapis.com/kubernetes-release/release/$K8SVERSION/bin/linux/amd64/kubectl
 ##chmod +x ./kubectl
@@ -56,7 +66,7 @@ sudo apt-get -y install docker-engine=$DOCKER_ENGINE_VERSION kubernetes-cni=$K8S
 
 sudo docker version
 sudo swapoff -a
-sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version="$K8SVERSION" --ignore-preflight-errors='KubeletVersion,IsDockerSystemdCheck,SystemVerification'
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version="$K8SVERSION" --ignore-preflight-errors='KubeletVersion'
 
 # result will be like:  kubeadm join 155.98.36.111:6443 --token i0peso.pzk3vriw1iz06ruj --discovery-token-ca-cert-hash sha256:19c5fdee6189106f9cb5b622872fe4ac378f275a9d2d2b6de936848215847b98
 
