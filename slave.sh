@@ -47,7 +47,7 @@ python-pip automake autoconf libtool indent vim tmux jq
 version=$(echo $(echo $K8SVERSION |sed 's/v//')-00)
 sudo apt-get install -qy kubelet=$version kubectl=$version kubeadm=$version
 #sudo apt-get -y install  docker-engine=$DOCKER_ENGINE_VERSION kubernetes-cni=$K8S_CNI_VERSION golang-go jq 
-sudo apt-get -y install kubernetes-cni=$K8S_CNI_VErSION golang-go jq
+sudo apt-get -y install kubernetes-cni=$K8S_CNI_VERSION golang-go jq
 
 sudo docker version
 sudo swapoff -a

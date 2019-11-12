@@ -36,7 +36,7 @@ exec >> ${WORKINGDIR}/deploy.log
 exec 2>&1
 
 KUBEHOME="${WORKINGDIR}/kube/"
-DEPLOY_CONFIG="${WORKINGDIR}/cloudlab-k8s-profile/$K8SVERSION/kube-deploy-yaml/"
+DEPLOY_CONFIG="${WORKINGDIR}/cloudlab_k8s_profile/$K8SVERSION/kube-deploy-yaml/"
 mkdir -p $KUBEHOME && cd $KUBEHOME
 export KUBECONFIG=$KUBEHOME/admin.conf
 
@@ -75,7 +75,7 @@ sudo cp /etc/kubernetes/admin.conf $KUBEHOME/
 sudo chown ${username}:${usergid} $KUBEHOME/admin.conf
 sudo chmod g+r $KUBEHOME/admin.conf
 
-sudo kubectl create -f $DEPLOY_CONFIG/kube-flannel-rbac.yml
+#sudo kubectl create -f $DEPLOY_CONFIG/kube-flannel-rbac.yml
 sudo kubectl create -f $DEPLOY_CONFIG/kube-flannel.yml
 
 # use this to enable autocomplete
@@ -89,8 +89,12 @@ source <(kubectl completion bash)
 #sudo kubectl proxy  --kubeconfig=${KUBEHOME}/admin.conf  &
 
 # https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
+
 kubectl create -f $DEPLOY_CONFIG/create-cluster-role-binding-admin.yaml  
 kubectl create -f $DEPLOY_CONFIG/create-service-account-admin-uesr-dashboard.yaml
+
+
+
 # to print the token, use this cmd below to paste into the browser.
 # kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}') |grep token: | awk '{print $2}'
 
