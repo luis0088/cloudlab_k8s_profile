@@ -120,15 +120,15 @@ sudo go build -o /usr/bin/jid github.com/simeji/jid/cmd/jid
 #source <(helm completion bash)
 
 # Wait till the slave nodes get joined and update the kubelet daemon successfully
-echo "Waiting for slaves nodes..."
-nodes=(`ssh -o StrictHostKeyChecking=no ${username}@ops.emulab.net "/usr/testbed/bin/node_list -p -e ${projectid},${experimentid};"`)
-node_cnt=${#nodes[@]}
-joined_cnt=$(( `kubectl get nodes |wc -l` - 1 ))
-while [ $node_cnt -ne $joined_cnt ]
-do 
-    joined_cnt=$(( `kubectl get nodes |wc -l` - 1 ))
-    sleep 1
-done
+# echo "Waiting for slaves nodes..."
+# nodes=(`ssh -o StrictHostKeyChecking=no ${username}@ops.emulab.net "/usr/testbed/bin/node_list -p -e ${projectid},${experimentid};"`)
+# node_cnt=${#nodes[@]}
+# joined_cnt=$(( `kubectl get nodes |wc -l` - 1 ))
+# while [ $node_cnt -ne $joined_cnt ]
+# do 
+    # joined_cnt=$(( `kubectl get nodes |wc -l` - 1 ))
+    # sleep 1
+# done
 
 echo "Kubernetes is ready at: http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login"
 
@@ -137,6 +137,9 @@ echo "Or, another access option"
 echo "kubernetes dashboard endpoint: $dashboard_endpoint"
 # dashboard credential
 echo "And this is the dashboard credential: $dashboard_credential"
+
+
+
 
 # to know how much time it takes to instantiate everything.
 echo "Finishing..."

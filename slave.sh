@@ -51,13 +51,19 @@ sudo apt-get -y install kubernetes-cni=$K8S_CNI_VERSION golang-go jq
 
 sudo docker version
 sudo swapoff -a
+sudo kubeadm config images pull
 
 master_token=''
+
+
 while [ -z $master_token ] 
 do
-    master_token=`ssh -o StrictHostKeyChecking=no m "export KUBECONFIG='/mnt/extra/kube/admin.conf' &&   kubeadm token list |grep authentication | cut -d' ' -f 1"`;
+    # master_token=`ssh -o StrictHostKeyChecking=no m "export KUBECONFIG='/mnt/extra/kube/admin.conf' &&   kubeadm token list |grep authentication | cut -d' ' -f 1"`;
+    master_token=`sudo -u luis_o ssh -o StrictHostKeyChecking=no luis_o@m "export KUBECONFIG='/mnt/extra/kube/admin.conf' &&   kubeadm token list |grep authentication | cut -d' ' -f 1"`;
     sleep 1;
 done
+
+
 sudo kubeadm join m:6443 --token $master_token --discovery-token-unsafe-skip-ca-verification 
 
 # patch the kubelet to force --resolv-conf=''
