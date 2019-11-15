@@ -56,20 +56,20 @@ sudo kubeadm config images pull
 master_token=''
 
 
-while [ -z $master_token ] 
-do
-    # master_token=`ssh -o StrictHostKeyChecking=no m "export KUBECONFIG='/mnt/extra/kube/admin.conf' &&   kubeadm token list |grep authentication | cut -d' ' -f 1"`;
-    master_token=`sudo -u luis_o ssh -o StrictHostKeyChecking=no luis_o@m "export KUBECONFIG='/mnt/extra/kube/admin.conf' &&   kubeadm token list |grep authentication | cut -d' ' -f 1"`;
-    sleep 1;
-done
+# while [ -z $master_token ] 
+# do
+    # # master_token=`ssh -o StrictHostKeyChecking=no m "export KUBECONFIG='/mnt/extra/kube/admin.conf' &&   kubeadm token list |grep authentication | cut -d' ' -f 1"`;
+    # master_token=`sudo -u luis_o ssh -o StrictHostKeyChecking=no luis_o@m "export KUBECONFIG='/mnt/extra/kube/admin.conf' &&   kubeadm token list |grep authentication | cut -d' ' -f 1"`;
+    # sleep 1;
+# done
 
 
-sudo kubeadm join m:6443 --token $master_token --discovery-token-unsafe-skip-ca-verification 
+# sudo kubeadm join m:6443 --token $master_token --discovery-token-unsafe-skip-ca-verification 
 
 # patch the kubelet to force --resolv-conf=''
-sudo sed -i 's#Environment="KUBELET_CONFIG_ARGS=--config=/var/lib/kubelet/config.yaml"#Environment="KUBELET_CONFIG_ARGS=--config=/var/lib/kubelet/config.yaml --resolv-conf=''"#g' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-sudo systemctl daemon-reload 
-sudo systemctl restart kubelet.service
+# sudo sed -i 's#Environment="KUBELET_CONFIG_ARGS=--config=/var/lib/kubelet/config.yaml"#Environment="KUBELET_CONFIG_ARGS=--config=/var/lib/kubelet/config.yaml --resolv-conf=''"#g' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+# sudo systemctl daemon-reload 
+# sudo systemctl restart kubelet.service
 
 # if it complains that "[ERROR Port-10250]: Port 10250 is in use", kill the process.
 # if it complains some file already exist, remove those. [ERROR FileAvailable--etc-kubernetes-pki-ca.crt]: /etc/kubernetes/pki/ca.crt already exists
