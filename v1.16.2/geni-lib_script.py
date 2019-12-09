@@ -54,7 +54,8 @@ import geni.rspec.pg as RSpec
 git_tar_scripts= 'https://github.com/luis0088/cloudlab_k8s_profile/raw/master/cloudlab_k8s_profile.tar.gz'
 # for ubuntu 16.04: 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
 disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD';
-hardware_type = 'pc3000' 
+#hardware_type = 'pc3000' 
+hardware_type = 'd430' 
 storage_capacity = '200GB';
 k8s_version = "v1.16.2";
 
@@ -78,7 +79,6 @@ request.addTour(tour)
 
 # Node kube-server
 kube_m = request.RawPC('m')
-#kube_m.hardware_type = 'd430'
 kube_m.hardware_type = hardware_type
 
 kube_m.disk_image = disk_image
@@ -92,7 +92,6 @@ kube_m.addService(pg.Execute(shell="bash", command="/mnt/extra/master.sh %s" %k8
 slave_ifaces = []
 for i in range(1,params.computeNodeCount+1):
     kube_s = request.RawPC('s'+str(i))
-    #kube_s.hardware_type = 'd430'
     kube_s.hardware_type = hardware_type
     kube_s.disk_image = disk_image
     kube_s.Site('Site 1')
