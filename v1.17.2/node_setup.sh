@@ -196,7 +196,7 @@ EOF
 
   # install flannel
   ##kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
-  kubectl apply -f kube-flannel.yaml ### Changed to specify the IFace
+  kubectl apply -f kube-flannel.yml ### Changed to specify the IFace
   kubectl apply -f create-cluster-role-binding-admin.yaml
   kubectl apply -f create-service-account-admin-uesr-dashboard.yaml
 
