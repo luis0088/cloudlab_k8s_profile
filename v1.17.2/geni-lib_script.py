@@ -88,7 +88,7 @@ bs0 = kube_m.Blockstore('bs0', '/mnt/extra')
 bs0.size = storage_capacity
 bs0.placement = 'NONSYSVOL'
 kube_m.addService(pg.Install(git_tar_scripts,'/mnt/extra/'))
-kube_m.addService(pg.Execute(shell="bash", command="/mnt/extra/cloudlab_k8s_profile/v1.17.2/node_setup.sh"))
+kube_m.addService(pg.Execute(shell="bash", command="/mnt/extra/node_setup.sh"))
 slave_ifaces = []
 for i in range(1,params.computeNodeCount+1):
     kube_s = request.RawPC('s'+str(i))
@@ -101,7 +101,7 @@ for i in range(1,params.computeNodeCount+1):
     bs.placement = 'NONSYSVOL'
 
     kube_s.addService(pg.Install(git_tar_scripts,'/mnt/extra/'))
-    kube_s.addService(pg.Execute(shell="bash", command="/mnt/extra/cloudlab_k8s_profile/v1.17.2/node_setup.sh"))
+    kube_s.addService(pg.Execute(shell="bash", command="/mnt/extra/node_setup.sh"))
 
 # Link link-m
 link_m = request.Link('link-0')
