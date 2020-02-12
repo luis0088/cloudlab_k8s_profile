@@ -106,7 +106,7 @@ data:
   cni-conf.json: |
     {
       "name": "cbr0",
-      
+      "cniVersion": "0.3.1",
       "plugins": [
         {
           "type": "flannel",
@@ -189,6 +189,7 @@ spec:
         args:
         - --ip-masq
         - --kube-subnet-mgr
+        - --iface-regex=10\.10\.1\.*
         resources:
           requests:
             cpu: "100m"
@@ -283,6 +284,7 @@ spec:
         args:
         - --ip-masq
         - --kube-subnet-mgr
+        - --iface=enp6s0f1
         resources:
           requests:
             cpu: "100m"
